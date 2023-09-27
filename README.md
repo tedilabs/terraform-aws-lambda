@@ -17,6 +17,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
   - Function (Comming soon!)
 - **AWS SFN (State Functions)**
   - State Machine
+    - Versions & Aliases
 
 
 ## Examples
@@ -26,6 +27,10 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 
 ### AWS SFN (State Functions)
 
+- [sfn-state-machine-flow](./examples/sfn-state-machine-flow)
+- [sfn-state-machine-hello-world](./examples/sfn-state-machine-hello-world)
+- [sfn-state-machine-logging](./examples/sfn-state-machine-logging)
+- [sfn-state-machine-version-aliases](./examples/sfn-state-machine-version-aliases)
 
 
 ## Self Promotion
