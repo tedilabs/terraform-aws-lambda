@@ -54,6 +54,9 @@ module "role" {
     var.tracing.enabled ? {
       "xray" = data.aws_iam_policy_document.xray[0].json,
     } : {},
+    local.lambda_integration_detected ? {
+      "lambda" = data.aws_iam_policy_document.lambda[0].json,
+    } : {},
     var.iam_role.inline_policies,
   )
 
@@ -65,6 +68,11 @@ module "role" {
     var.tags,
   )
 }
+
+
+###################################################
+# IAM Policy for CloudWatch Logging
+###################################################
 
 data "aws_iam_policy_document" "cloudwatch" {
   count = (!local.custom_iam_role_enabled && var.logging.enabled) ? 1 : 0
@@ -101,6 +109,11 @@ data "aws_iam_policy_document" "cloudwatch" {
   }
 }
 
+
+###################################################
+# IAM Policy for X-Ray Tracing
+###################################################
+
 data "aws_iam_policy_document" "xray" {
   count = (!local.custom_iam_role_enabled && var.tracing.enabled) ? 1 : 0
 
@@ -117,5 +130,32 @@ data "aws_iam_policy_document" "xray" {
     resources = [
       "*",
     ]
+  }
+}
+
+
+###################################################
+# IAM Policy for Invoking Lambda Functions
+###################################################
+
+locals {
+  lambda_integration_functions = distinct(flatten(regexall(
+    "\"(arn:aws:lambda:[a-z0-9-]+:[0-9]+:function:[a-zA-Z0-9-_./]+)\"",
+    var.definition
+  )))
+  lambda_integration_detected = length(local.lambda_integration_functions) > 0
+}
+
+data "aws_iam_policy_document" "lambda" {
+  count = (!local.custom_iam_role_enabled && local.lambda_integration_detected) ? 1 : 0
+
+  statement {
+    sid = "InvokeLambdaFunctions"
+
+    effect = "Allow"
+    actions = [
+      "lambda:InvokeFunction",
+    ]
+    resources = local.lambda_integration_functions
   }
 }
