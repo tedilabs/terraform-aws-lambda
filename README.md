@@ -30,6 +30,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 - [sfn-state-machine-flow](./examples/sfn-state-machine-flow)
 - [sfn-state-machine-hello-world](./examples/sfn-state-machine-hello-world)
 - [sfn-state-machine-logging](./examples/sfn-state-machine-logging)
+- [sfn-state-machine-tracing](./examples/sfn-state-machine-tracing)
 - [sfn-state-machine-version-aliases](./examples/sfn-state-machine-version-aliases)
 
 
