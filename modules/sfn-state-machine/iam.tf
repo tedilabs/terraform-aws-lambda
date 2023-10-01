@@ -2,10 +2,12 @@ data "aws_caller_identity" "this" {}
 
 locals {
   account_id = data.aws_caller_identity.this.account_id
+
+  custom_iam_role_enabled = !(var.custom_iam_role == null && var.iam_role.enabled)
 }
 
 data "aws_iam_role" "custom" {
-  count = var.custom_iam_role != null ? 1 : 0
+  count = local.custom_iam_role_enabled ? 1 : 0
 
   name = (startswith(var.custom_iam_role, "arn:aws")
     ? split(":role/", var.custom_iam_role)[1]
@@ -19,7 +21,7 @@ data "aws_iam_role" "custom" {
 ###################################################
 
 module "role" {
-  count = (var.custom_iam_role == null && var.iam_role.enabled) ? 1 : 0
+  count = !local.custom_iam_role_enabled ? 1 : 0
 
   source  = "tedilabs/account/aws//modules/iam-role"
   version = "~> 0.27.0"
@@ -49,6 +51,9 @@ module "role" {
     var.logging.enabled ? {
       "cloudwatch-logs" = data.aws_iam_policy_document.cloudwatch[0].json,
     } : {},
+    var.tracing.enabled ? {
+      "xray" = data.aws_iam_policy_document.xray[0].json,
+    } : {},
     var.iam_role.inline_policies,
   )
 
@@ -62,7 +67,7 @@ module "role" {
 }
 
 data "aws_iam_policy_document" "cloudwatch" {
-  count = var.logging.enabled ? 1 : 0
+  count = (!local.custom_iam_role_enabled && var.logging.enabled) ? 1 : 0
 
   statement {
     sid = "ConfigureCloudWatchLogging"
@@ -92,6 +97,25 @@ data "aws_iam_policy_document" "cloudwatch" {
     ]
     resources = [
       "${var.logging.cloudwatch.log_group}:*"
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "xray" {
+  count = (!local.custom_iam_role_enabled && var.tracing.enabled) ? 1 : 0
+
+  statement {
+    sid = "ConfigureXrayTracing"
+
+    effect = "Allow"
+    actions = [
+      "xray:PutTraceSegments",
+      "xray:PutTelemetryRecords",
+      "xray:GetSamplingRules",
+      "xray:GetSamplingTargets",
+    ]
+    resources = [
+      "*",
     ]
   }
 }

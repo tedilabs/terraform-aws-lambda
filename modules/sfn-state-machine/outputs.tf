@@ -30,10 +30,10 @@ output "definition" {
 
 output "latest_version" {
   description = "The information of the latest version for the state machine."
-  value = {
+  value = try({
     arn = aws_sfn_state_machine.this.state_machine_version_arn
     id  = regex("\\d+$", aws_sfn_state_machine.this.state_machine_version_arn)
-  }
+  }, null)
 }
 
 output "versions" {
