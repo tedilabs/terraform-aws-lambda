@@ -95,6 +95,22 @@ variable "iam_role" {
   nullable = false
 }
 
+variable "service_integrations" {
+  description = <<EOF
+  (Optional) A configuration of AWS service integrations to allow in the resource policy of the state machine. Supported AWS services are `lambda`. `service_integrations` as defined below.
+    (Optional) `lambda` - A configuration to integrate the state machine to AWS Lambda functions. `lambda` as defined below.
+      (Optional) `enabled` - Whether to enable the integration to AWS Lambda functions.
+  EOF
+  type = object({
+    lambda = optional(object({
+      enabled   = optional(bool, false)
+      functions = optional(list(string), [])
+    }), {})
+  })
+  default  = {}
+  nullable = false
+}
+
 variable "logging" {
   description = <<EOF
   (Optional) The configuration to define what execution history events are logged and where they are logged. Standard Workflows record execution history in AWS Step Functions, although you can optionally configure logging to Amazon CloudWatch Logs. For Express state machines, you must enable logging to inspect and debug executions. `logging` as defined below.

@@ -54,7 +54,7 @@ module "role" {
     var.tracing.enabled ? {
       "xray" = data.aws_iam_policy_document.xray[0].json,
     } : {},
-    local.lambda_integration_detected ? {
+    var.service_integrations["lambda"].enabled ? {
       "lambda" = data.aws_iam_policy_document.lambda[0].json,
     } : {},
     var.iam_role.inline_policies,
@@ -139,15 +139,15 @@ data "aws_iam_policy_document" "xray" {
 ###################################################
 
 locals {
-  lambda_integration_functions = distinct(flatten(regexall(
+  lambda_integration_detected_functions = distinct(flatten(regexall(
     "\"(arn:aws:lambda:[a-z0-9-]+:[0-9]+:function:[a-zA-Z0-9-_./]+)\"",
     var.definition
   )))
-  lambda_integration_detected = length(local.lambda_integration_functions) > 0
+  lambda_integration_functions = coalescelist(var.service_integrations["lambda"].functions, local.lambda_integration_detected_functions)
 }
 
 data "aws_iam_policy_document" "lambda" {
-  count = (!local.custom_iam_role_enabled && local.lambda_integration_detected) ? 1 : 0
+  count = (!local.custom_iam_role_enabled && var.service_integrations["lambda"].enabled) ? 1 : 0
 
   statement {
     sid = "InvokeLambdaFunctions"
