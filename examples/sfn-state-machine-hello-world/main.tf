@@ -33,6 +33,11 @@ module "state_machine" {
   iam_role = {
     enabled = true
   }
+  service_integrations = {
+    "lambda" = {
+      enabled = true
+    }
+  }
 
   tags = {
     "project" = "terraform-aws-lambda-examples"
