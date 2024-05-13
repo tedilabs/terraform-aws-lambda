@@ -24,7 +24,7 @@ module "role" {
   count = !local.custom_iam_role_enabled ? 1 : 0
 
   source  = "tedilabs/account/aws//modules/iam-role"
-  version = "~> 0.27.0"
+  version = "~> 0.30.0"
 
   name        = "aws-sfn-state-machine-${local.metadata.name}"
   path        = "/"
