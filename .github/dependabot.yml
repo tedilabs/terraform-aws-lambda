@@ -7,6 +7,6 @@ updates:
 
 - package-ecosystem: terraform
   directories:
-  - /modules/sfn-state-machine
+  - /modules/*
   schedule:
     interval: weekly
