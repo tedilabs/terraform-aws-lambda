@@ -4,7 +4,7 @@ This module creates following resources.
 
 - `aws_sfn_state_machine`
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -76,4 +76,4 @@ This module creates following resources.
 | <a name="output_tracing"></a> [tracing](#output\_tracing) | The configuration of AWS X-Ray tracing for the state machine. |
 | <a name="output_type"></a> [type](#output\_type) | The type of the state machine. |
 | <a name="output_versions"></a> [versions](#output\_versions) | A map of versions for the state machine. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
