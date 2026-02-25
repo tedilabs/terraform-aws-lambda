@@ -60,6 +60,8 @@ module "role" {
     var.iam_role.inline_policies,
   )
 
+  permissions_boundary = var.iam_role.permissions_boundary
+
   resource_group_enabled = false
   module_tags_enabled    = false
 
