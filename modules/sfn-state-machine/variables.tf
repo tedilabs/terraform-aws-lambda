@@ -80,6 +80,7 @@ variable "iam_role" {
     (Optional) `enabled` - Whether to create a default IAM role managed by this module.
     (Optional) `policies` - A list of IAM policies ARNs to attach to IAM role.
     (Optional) `inline_policies` - Map of inline IAM policies to attach to IAM role. (`name` => `policy`).
+    (Optional) `permissions_boundary` - The ARN of the IAM policy to use as permissions boundary for the default IAM role.
   EOF
   type = object({
     enabled = optional(bool, true)
@@ -88,8 +89,9 @@ variable "iam_role" {
       condition = string
       values    = list(string)
     })), [])
-    policies        = optional(list(string), [])
-    inline_policies = optional(map(string), {})
+    policies             = optional(list(string), [])
+    inline_policies      = optional(map(string), {})
+    permissions_boundary = optional(string)
   })
   default  = {}
   nullable = false
