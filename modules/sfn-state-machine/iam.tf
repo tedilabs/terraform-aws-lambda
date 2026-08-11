@@ -24,7 +24,7 @@ module "role" {
   count = !local.custom_iam_role_enabled ? 1 : 0
 
   source  = "tedilabs/account/aws//modules/iam-role"
-  version = "~> 0.27.0"
+  version = "~> 0.33.0"
 
   name        = "aws-sfn-state-machine-${local.metadata.name}"
   path        = "/"
@@ -62,8 +62,10 @@ module "role" {
 
   permissions_boundary = var.iam_role.permissions_boundary
 
-  resource_group_enabled = false
-  module_tags_enabled    = false
+  resource_group = {
+    enabled = false
+  }
+  module_tags_enabled = false
 
   tags = merge(
     local.module_tags,
