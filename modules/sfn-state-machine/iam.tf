@@ -24,7 +24,7 @@ module "role" {
   count = !local.custom_iam_role_enabled ? 1 : 0
 
   source  = "tedilabs/account/aws//modules/iam-role"
-  version = "~> 0.33.0"
+  version = "~> 0.34.0"
 
   name        = "aws-sfn-state-machine-${local.metadata.name}"
   path        = "/"
@@ -71,6 +71,10 @@ module "role" {
     local.module_tags,
     var.tags,
   )
+
+  telemetry = {
+    enabled = false
+  }
 }
 
 
