@@ -78,6 +78,7 @@ variable "iam_role" {
   description = <<EOF
   (Optional) A configuration of the default IAM role used by the state machine to access other resources. It is only used when `custom_iam_role` is not provided. `iam_role` as defined below.
     (Optional) `enabled` - Whether to create a default IAM role managed by this module.
+    (Optional) `assumable_roles` - A set of IAM role ARNs that can be assumed by this role. Defaults to `[]`.
     (Optional) `policies` - A list of IAM policies ARNs to attach to IAM role.
     (Optional) `inline_policies` - Map of inline IAM policies to attach to IAM role. (`name` => `policy`).
     (Optional) `permissions_boundary` - The ARN of the IAM policy to use as permissions boundary for the default IAM role.
@@ -89,6 +90,7 @@ variable "iam_role" {
       condition = string
       values    = list(string)
     })), [])
+    assumable_roles      = optional(set(string), [])
     policies             = optional(list(string), [])
     inline_policies      = optional(map(string), {})
     permissions_boundary = optional(string)

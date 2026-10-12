@@ -46,6 +46,8 @@ module "role" {
   ]
   conditions = var.iam_role.conditions
 
+  assumable_roles = var.iam_role.assumable_roles
+
   policies = var.iam_role.policies
   inline_policies = merge(
     var.logging.enabled ? {
