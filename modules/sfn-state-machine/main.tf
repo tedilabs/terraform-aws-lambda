@@ -41,7 +41,7 @@ resource "aws_sfn_state_machine" "this" {
 
     log_destination = (var.logging.enabled
       ? "${var.logging.cloudwatch.log_group}:*"
-      : ""
+      : null
     )
   }
 
