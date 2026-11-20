@@ -153,7 +153,10 @@ locals {
     "\"(arn:aws:lambda:[a-z0-9-]+:[0-9]+:function:[a-zA-Z0-9-_./]+)\"",
     var.definition
   )))
-  lambda_integration_functions = coalescelist(var.service_integrations["lambda"].functions, local.lambda_integration_detected_functions)
+  lambda_integration_functions = (length(var.service_integrations["lambda"].functions) > 0
+    ? var.service_integrations["lambda"].functions
+    : local.lambda_integration_detected_functions
+  )
 }
 
 data "aws_iam_policy_document" "lambda" {
