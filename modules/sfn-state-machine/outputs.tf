@@ -71,10 +71,10 @@ output "iam_role" {
       one(data.aws_iam_role.custom[*].name),
       one(module.role[*].name),
     )
-    description = coalesce(
-      one(data.aws_iam_role.custom[*].description),
-      one(module.role[*].description),
-    )
+    description = one(concat(
+      data.aws_iam_role.custom[*].description,
+      module.role[*].description,
+    ))
   }
 }
 
