@@ -9,10 +9,8 @@ locals {
 data "aws_iam_role" "custom" {
   count = local.custom_iam_role_enabled ? 1 : 0
 
-  name = (startswith(var.custom_iam_role, "arn:aws")
-    ? split(":role/", var.custom_iam_role)[1]
-    : var.custom_iam_role
-  )
+  # INFO: `name` only accepts the friendly name without path.
+  name = reverse(split("/", var.custom_iam_role))[0]
 }
 
 
