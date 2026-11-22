@@ -64,7 +64,7 @@ output "aliases" {
 }
 
 output "iam_role" {
-  description = "The IAM role used by the crawler to access other resources."
+  description = "The IAM role used by the state machine to access other resources."
   value = {
     arn = aws_sfn_state_machine.this.role_arn
     name = coalesce(

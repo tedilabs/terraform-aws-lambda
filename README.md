@@ -15,7 +15,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 
 - **AWS Lambda**
   - Function (Comming soon!)
-- **AWS SFN (State Functions)**
+- **AWS SFN (Step Functions)**
   - State Machine
     - Versions & Aliases
 
@@ -25,7 +25,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 ### AWS Lambda
 
 
-### AWS SFN (State Functions)
+### AWS SFN (Step Functions)
 
 - [sfn-state-machine-flow](./examples/sfn-state-machine-flow)
 - [sfn-state-machine-hello-world](./examples/sfn-state-machine-hello-world)

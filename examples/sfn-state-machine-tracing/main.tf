@@ -10,7 +10,7 @@ provider "aws" {
 module "state_machine" {
   source = "../../modules/sfn-state-machine"
   # source  = "tedilabs/lambda/aws//modules/sfn-state-machine"
-  # version = "~> 0.2.0"
+  # version = "~> 0.4.0"
 
   name = "hello-world"
   type = "STANDARD"
