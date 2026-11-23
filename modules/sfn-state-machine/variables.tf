@@ -68,7 +68,7 @@ variable "aliases" {
 }
 
 variable "custom_iam_role" {
-  description = "(Optional) The IAM role friendly name (including path without leading slash), or Amazon Resource Name (ARN) of an IAM role, used by the this state machine. Provide `custom_iam_role` if you want to use the IAM role from the outside of this module."
+  description = "(Optional) The IAM role friendly name (including path without leading slash), or Amazon Resource Name (ARN) of an IAM role, used by this state machine. Provide `custom_iam_role` if you want to use the IAM role from the outside of this module."
   type        = string
   default     = null
   nullable    = true
