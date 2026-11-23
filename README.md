@@ -14,7 +14,7 @@ Terraform module which creates lambda related resources on AWS.
 Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-lambda) were written to manage the following AWS Services with Terraform.
 
 - **AWS Lambda**
-  - Function (Comming soon!)
+  - Function (Coming soon!)
 - **AWS SFN (Step Functions)**
   - State Machine
     - Versions & Aliases
