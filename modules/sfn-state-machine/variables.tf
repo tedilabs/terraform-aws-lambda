@@ -6,7 +6,7 @@ variable "name" {
 
 variable "type" {
   description = <<EOF
-  (Optional) The type of the state machine. Valid values are `STANDARD` and `EXPRESS`. You cannot update the type of a state machine once it has been created. Defaults to `false`.
+  (Optional) The type of the state machine. Valid values are `STANDARD` and `EXPRESS`. You cannot update the type of a state machine once it has been created. Defaults to `STANDARD`.
     `STANDARD` - Durable workflows for ETL, ML, e-commerce and automation. They can run for up to 1 year, and history is stored in Step Functions for auditing and playback. Supported by a feature-rich console debugger. Recommended for new users.
     `EXPRESS` - Low cost, high scale workflows for streaming data processing and microservice APIs. They can run for up to 5 minutes, and history can be streamed to CloudWatch Logs.
   EOF
@@ -77,7 +77,8 @@ variable "custom_iam_role" {
 variable "iam_role" {
   description = <<EOF
   (Optional) A configuration of the default IAM role used by the state machine to access other resources. It is only used when `custom_iam_role` is not provided. `iam_role` as defined below.
-    (Optional) `enabled` - Whether to create a default IAM role managed by this module.
+    (Optional) `enabled` - Whether to create a default IAM role managed by this module. Defaults to `true`.
+    (Optional) `conditions` - A list of required conditions to assume the IAM role. Defaults to `[]`.
     (Optional) `assumable_roles` - A set of IAM role ARNs that can be assumed by this role. Defaults to `[]`.
     (Optional) `policies` - A list of IAM policies ARNs to attach to IAM role.
     (Optional) `inline_policies` - Map of inline IAM policies to attach to IAM role. (`name` => `policy`).
