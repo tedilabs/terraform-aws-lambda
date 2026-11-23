@@ -65,6 +65,13 @@ variable "aliases" {
     ])
     error_message = "Each alias should have 1 - 2 versions for routing."
   }
+  validation {
+    condition = alltrue([
+      for alias in var.aliases :
+      sum(concat([0], [for routing in alias.routing : routing.weight])) == 100
+    ])
+    error_message = "The sum of the weights in `routing` of each alias should be equal to `100`."
+  }
 }
 
 variable "custom_iam_role" {
@@ -98,6 +105,11 @@ variable "iam_role" {
   })
   default  = {}
   nullable = false
+
+  validation {
+    condition     = var.custom_iam_role != null || var.iam_role.enabled
+    error_message = "`iam_role.enabled` should be `true` when `custom_iam_role` is not provided."
+  }
 }
 
 variable "service_integrations" {
@@ -149,6 +161,10 @@ variable "logging" {
       var.logging.enabled && !endswith(var.logging.cloudwatch.log_group, ":*")
     ])
     error_message = "Log Group ARN must not be provided with ':*' suffix."
+  }
+  validation {
+    condition     = !var.logging.enabled || var.logging.cloudwatch.log_group != ""
+    error_message = "`cloudwatch.log_group` should be provided when `logging.enabled` is `true`."
   }
 }
 
