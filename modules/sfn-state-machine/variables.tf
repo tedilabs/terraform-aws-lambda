@@ -102,9 +102,10 @@ variable "iam_role" {
 
 variable "service_integrations" {
   description = <<EOF
-  (Optional) A configuration of AWS service integrations to allow in the resource policy of the state machine. Supported AWS services are `lambda`. `service_integrations` as defined below.
+  (Optional) A configuration of AWS service integrations to allow in the inline policies of the default IAM role of the state machine. Only used when the default IAM role is created by this module. Supported AWS services are `lambda`. `service_integrations` as defined below.
     (Optional) `lambda` - A configuration to integrate the state machine to AWS Lambda functions. `lambda` as defined below.
-      (Optional) `enabled` - Whether to enable the integration to AWS Lambda functions.
+      (Optional) `enabled` - Whether to enable the integration to AWS Lambda functions. Defaults to `false`.
+      (Optional) `functions` - A list of ARNs of AWS Lambda functions which the state machine is allowed to invoke. If not provided, the Lambda function ARNs are detected from `definition`. Defaults to `[]`.
   EOF
   type = object({
     lambda = optional(object({
